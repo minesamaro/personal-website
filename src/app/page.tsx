@@ -9,7 +9,9 @@ import Experience from "../components/Experience";
 import Education from "../components/Education";
 import Contact from "../components/Contact";
 import Languages from "../components/Languages";
+import WhereAmI from "../components/WhereAmI";
 import { motion } from "framer-motion";
+
 
 export default function Home() {
   return (
@@ -38,6 +40,8 @@ export default function Home() {
 
       {/* Education Section */}
       {/* <Education /> */}
+
+      <WhereAmI />
 
       {/* Contact Section */}
       <Contact />
