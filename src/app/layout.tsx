@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces, DM_Sans, Abril_Fatface, Manrope } from "next/font/google";
+import Background from "@/components/Background";
 import "../styles/globals.css";
 
 const geistSans = Geist({
@@ -13,20 +14,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maria's Portfolio",
+  title: "Maria Amaro",
   description: "Biomedical engineer and data scientist building ML & web stuff.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const display = Abril_Fatface({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-display",
+});
+
+const sans = Manrope({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${display.variable} ${sans.variable}`}>
+        <Background />
         {children}
       </body>
     </html>

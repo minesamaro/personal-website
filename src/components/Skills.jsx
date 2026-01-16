@@ -1,126 +1,109 @@
 "use client";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function SkillsPacman() {
-  const gridSize = 7; // bigger grid for more flowers
-  const [pacmanPos, setPacmanPos] = useState({ x: 0, y: 0 });
-  const [eaten, setEaten] = useState({});
-  const [skillList, setSkillList] = useState([]);
+const skills = [
+  { label: "Python", tone: "ink" },
+  { label: "Data Analysis", tone: "ink" },
+  { label: "Machine Learning", tone: "ink" },
+  { label: "Web Development", tone: "ink" },
+  { label: "Interpersonal Communication", tone: "ink" },
+  { label: "Leadership", tone: "ink" },
+  { label: "Teamwork", tone: "ink" },
+  { label: "Problem Solving", tone: "ink" },
+  { label: "Critical Thinking", tone: "ink" },
+];
 
-  // Many more skills!
-  const flowers = {
-    "1-2": "Python",
-    "3-1": "Interpersonal Communication",
-    "4-3": "Conflict Resolution",
-    "5-5": "Data Analysis",
-    "2-4": "Leadership",
-    "6-2": "Teamwork",
-    "0-6": "Problem Solving",
-    "3-6": "Critical Thinking",
-  };
+function toneClass(tone) {
+  if (tone === "coral") return "text-[var(--coral)]";
+  if (tone === "sea") return "text-[var(--sea)]";
+  return "text-[var(--ink)]";
+}
 
-  // Prevent arrow keys from scrolling the page
-  useEffect(() => {
-    const preventScroll = (e) => {
-      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-        e.preventDefault();
-      }
-    };
-    window.addEventListener("keydown", preventScroll, { passive: false });
-    return () => window.removeEventListener("keydown", preventScroll);
-  }, []);
-
-  // Movement logic
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      setPacmanPos((prev) => {
-        let { x, y } = prev;
-
-        if (e.key === "ArrowUp" && y > 0) y--;
-        if (e.key === "ArrowDown" && y < gridSize - 1) y++;
-        if (e.key === "ArrowLeft" && x > 0) x--;
-        if (e.key === "ArrowRight" && x < gridSize - 1) x++;
-
-        return { x, y };
-      });
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  // Eating logic
-  useEffect(() => {
-    const cellKey = `${pacmanPos.x}-${pacmanPos.y}`;
-    if (flowers[cellKey] && !eaten[cellKey]) {
-      setEaten((prev) => ({ ...prev, [cellKey]: true }));
-      setSkillList((prev) => [...prev, flowers[cellKey]]);
-    }
-  }, [pacmanPos]);
-
+function TideLine() {
   return (
-    <section id="skills" className="py-16 px-16 bg-gray-900 text-center text-white">
-      <h2 className="text-3xl font-bold mb-8">Top Skills — Ghost Edition</h2>
+    <motion.svg
+      className="mt-6 w-full"
+      viewBox="0 0 800 60"
+      fill="none"
+      aria-hidden="true"
+      initial={{ opacity: 0, y: 6 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.path
+        d="M0 30 C 80 10, 160 50, 240 30 C 320 10, 400 50, 480 30 C 560 10, 640 50, 720 30 C 760 20, 780 20, 800 30"
+        stroke="rgba(23,37,37,0.18)"
+        strokeWidth="2"
+        strokeDasharray="6 10"
+        animate={{ pathLength: [0, 1] }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
+    </motion.svg>
+  );
+}
 
-      {/* Wrapper for board + eaten skills */}
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-8">
+export default function SkillsFlowers() {
+  return (
+    <section id="skills" className="relative overflow-hidden">
+      <div className="relative mx-auto max-w-6xl px-6 py-24">
+        {/* heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15% 0px -15% 0px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="inline-flex items-center gap-2 border border-black/15 bg-white/60 px-3 py-1 text-xs font-semibold tracking-[0.16em] text-black/70">
+            <span className="h-2 w-2 bg-[var(--sea)]" />
+            SKILLS
+          </p>
 
-            {/* Game Board Card */}
-            <div className="max-w-md w-full p-6 bg-white/10 backdrop-blur-md rounded-3xl shadow-lg">
-            <div className="p-2 bg-white/20 rounded-lg flex justify-center">
-                {/* Grid adjusts to container size */}
-                <div className="grid grid-cols-7 gap-2 w-full">
-                {[...Array(gridSize)].map((_, y) =>
-                    [...Array(gridSize)].map((_, x) => {
-                    const key = `${x}-${y}`;
-                    const hasFlower = flowers[key] && !eaten[key];
-                    const isPacman = pacmanPos.x === x && pacmanPos.y === y;
+          <h2 className="mt-6 font-display text-5xl leading-[0.92] tracking-[-0.02em] text-[var(--ink)] md:text-6xl">
+            A bouquet of things I’m{" "}
+            <span className="text-[var(--coral)]">good at</span>.
+          </h2>
 
-                    return (
-                        <div
-                        key={key}
-                        className="relative w-full aspect-square bg-white rounded-md shadow-sm flex items-center justify-center"
-                        >
-                        {hasFlower && <span className="text-2xl">🌸</span>}
-                        {isPacman && <span className="text-3xl">👻</span>}
-                        </div>
-                    );
-                    })
-                )}
-                </div>
-            </div>
-            </div>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-black/70">
+            The mix: technical + human + calm under pressure.
+          </p>
 
-            {/* Eaten Skills List */}
-            <div className="w-48 flex flex-col items-center mt-6 md:mt-0">
-            <h3 className="text-xl md:text-2xl font-bold mb-4 text-white">Skills Unlocked</h3>
+          <TideLine />
+        </motion.div>
 
-            <ul className="space-y-3 w-full">
-                {skillList.length === 0 && (
-                <li className="text-gray-400 text-sm text-center">
-                    Eat flowers to reveal skills 🌸
-                </li>
-                )}
-
-                {skillList.map((skill, index) => (
-                <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="bg-purple-600 text-white font-semibold text-center text-base md:text-lg px-4 py-2 rounded-2xl shadow-md hover:scale-105 transition-transform duration-200"
-                >
-                    {skill}
-                </motion.li>
-                ))}
-            </ul>
-            </div>
+        {/* list (bigger than your old tiny list) */}
+        <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.65 }}
+              transition={{ duration: 0.45, delay: i * 0.03, ease: "easeOut" }}
+              className="flex items-baseline gap-3 border-b border-black/10 pb-3"
+            >
+              <span className="text-xl" aria-hidden="true">
+                🌸
+              </span>
+              <span className={["font-sans text-lg font-semibold", toneClass(s.tone)].join(" ")}>
+                {s.label}
+              </span>
+            </motion.div>
+          ))}
         </div>
 
-      {/* Instructions */}
-      <p className="mt-6 text-sm text-white/600">
-        Use the arrow keys to guide the Ghost 👻 and collect skills!
-      </p>
+        {/* tiny footer note */}
+        <motion.p
+          className="mt-12 text-sm text-black/60"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          A bit of code, a bit of people, a lot of care.
+        </motion.p>
+      </div>
+
     </section>
   );
 }

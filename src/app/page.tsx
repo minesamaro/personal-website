@@ -29,9 +29,6 @@ export default function Home() {
       {/* Skills Section */}
       <Skills />
 
-      {/* Languages Section */}
-      <Languages />
-
       {/* Certifications Section */}
       {/* <Certifications /> */}
 

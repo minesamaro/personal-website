@@ -1,33 +1,45 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+:root{
+  --sand: #F6F1E6;
+  --ink: #172525;
+  --sea: #2C7C82;
+  --coral: #FF6B5A;
+  --paper: rgba(255,255,255,.72);
+
+  --font-display: ui-serif, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body { 
+  height: 100%;
+  overflow-x: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #0a0a0a;
-    --background: #ededed;
-  }
-}
 
 body {
-  @apply bg-gray-900; /* Dark background */
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--sand);
 }
+
+.font-display { font-family: var(--font-display); }
+.font-sans { font-family: var(--font-sans); }
+
 
 /* Container that keeps the map centered and prevents overflow */
 .world-map svg {
   width: 100%;
   height: auto;
+  display: block;
+}
+
+.world-map path {
+  pointer-events: all;
 }
 
 .world-map path:hover,
